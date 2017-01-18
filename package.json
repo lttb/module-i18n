@@ -1,0 +1,57 @@
+{
+  "name": "module-i18n",
+  "version": "0.0.1",
+  "description": "Module i18n",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf lib/*",
+    "lint": "eslint src",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
+    "prebuild": "npm run clean && npm run lint && npm test",
+    "build": "babel src --out-dir lib --ignore tests",
+    "preversion": "npm run build",
+    "postversion": "git push --follow-tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lttb/module-i18n.git"
+  },
+  "keywords": [
+    "react",
+    "component",
+    "module",
+    "i18n",
+    "internationalization",
+    "loader",
+    "webpack",
+    "module-i18n"
+  ],
+  "author": "Kenzhaev Artur",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lttb/module-i18n/issues"
+  },
+  "homepage": "https://github.com/lttb/module-i18n#readme",
+  "dependencies": {
+    "js-yaml": "^3.7.0",
+    "string-replace-async": "^1.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.18.0",
+    "babel-core": "^6.21.0",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-airbnb": "^2.1.1",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-preset-stage-3": "^6.17.0",
+    "eslint": "^3.13.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^2.2.3",
+    "eslint-plugin-react": "^6.8.0",
+    "install": "^0.8.4",
+    "jest": "^18.1.0",
+    "npm": "^4.1.1"
+  }
+}

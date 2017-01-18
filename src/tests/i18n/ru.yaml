@@ -1,0 +1,29 @@
+yaml i18n test: yaml тест перевода
+yaml test with variable ${value}: yaml тест с переменной ${value}
+
+yaml test || yaml tests:
+  - yaml тест
+  - yaml теста
+  - yaml тестов
+
+yaml plural error test || yaml plural error tests:
+  - yaml тест ошибка
+  - yaml тест ошибки
+
+? |
+  yaml multiline
+  i18n test
+: |
+  yaml многострочный
+  i18n тест
+
+You have ${value} new ${i18n(value, 'notification || notifications')} from mailbox:
+  У вас есть ${value} ${i18n(value, 'new notification || new notifications')} из почты
+
+new notification || new notifications:
+  - новое уведомление
+  - новых уведомления
+  - новых уведомлений
+
+shorthand // You have ${value} new ${i18n(value, 'notification || notifications')} from mailbox:
+  У вас есть ${value} ${i18n_ru(value, 'новое уведомление || новых уведомления || новых уведомлений')} из почты

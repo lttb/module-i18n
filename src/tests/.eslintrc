@@ -1,0 +1,7 @@
+rules:
+  no-template-curly-in-string: 0
+  no-eval: 0
+  quotes: 0
+  no-unused-vars:
+    - error
+    - argsIgnorePattern: value

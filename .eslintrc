@@ -1,0 +1,22 @@
+parser: babel-eslint
+extends: airbnb
+rules:
+  semi:
+    - error
+    - never
+  no-console: 0
+  global-require: 0
+  no-unused-expressions:
+    - error
+    - allowShortCircuit: true
+
+  import/no-dynamic-require: 0
+  import/no-unresolved: [2, { ignore: ['^~.*', '\./style'] }]
+  import/extensions: 0
+env:
+  browser: true
+  es6: true
+  jest: true
+globals:
+    # for mi18n-loader
+    i18n: true

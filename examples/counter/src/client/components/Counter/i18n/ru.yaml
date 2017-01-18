@@ -1,0 +1,5 @@
+Clicked ${counter} ${i18n(counter, 'time || times')}:
+  Нажато ${counter} ${i18n_ru(counter, 'раз || раза || раз')}
+
+Increment: 'Увеличить'
+Decrement: 'Уменьшить'

@@ -7,6 +7,7 @@ const handlers = {
   json: JSON.parse,
 }
 
+
 export default (filename, type) => new Promise((resolve, reject) =>
   fs.readFile(filename, 'utf8', (err, data) => {
     err && reject(err)

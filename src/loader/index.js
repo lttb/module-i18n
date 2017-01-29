@@ -1,23 +1,29 @@
-import Replacer from '../'
+import Dictionary from '~/common/Dictionary'
+
+import Plural from './utils/Plural'
+import Clause from './utils/Clause'
 
 
-export default function (source) {
-  this.cacheable()
+const prepareOptions = ({ i18n, dict }) => {
+  const options = Object.assign({
+    namespace: 'i18n',
+    defaultLang: 'en',
+  }, i18n)
 
-  const callback = this.async()
+  const dictionary = Dictionary(options, dict)
 
-  const { type, handler, globalDict, ...i18n } = this.query
-  const { resource, dependency } = this
+  return Object.assign({ dictionary }, options)
+}
 
-  const dict = {
-    type,
-    handler,
-    globalDict,
-    resource,
-    dependency,
-  }
+const format = async source =>
+  (await source).replace(/\$\{{2}(.*?)\}{2}/g, '${$1}')
 
-  Replacer(source, { i18n, dict })
-    .then(result => callback(null, result))
-    .catch(callback)
+
+export default (source, options) => {
+  const translateOptions = prepareOptions(options)
+
+  const clause = Clause(translateOptions)
+  const plural = Plural(translateOptions)
+
+  return format(plural(clause(source)))
 }

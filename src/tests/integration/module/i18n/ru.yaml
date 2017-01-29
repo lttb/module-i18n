@@ -1,0 +1,13 @@
+This is test message: это тестовое сообщение
+
+'Total messages: ${{ messages }}': 'Всего сообщений: ${{ messages }}'
+'Total messages codestyle: ${{messages}}': 'Всего сообщений в другом стиле: ${{messages}}'
+
+'Total messages different codestyle: ${{messages}}': 'Всего сообщений в другом стиле: ${{  messages }}'
+
+You have ${{ messages }} new ${`messages, 'message || messages'`}: У вас ${{ messages }} новых ${`messages, 'message || messages'`}
+
+message || messages:
+  - сообщение
+  - сообщения
+  - сообщений

@@ -1,5 +1,6 @@
 const nPluralRegexp = new RegExp('[?:]\\s*(\\d)+', 'g')
 
+
 export default ({ arity, plural, pluralArr }) => {
   if (arity === 1) {
     return pluralArr[0]

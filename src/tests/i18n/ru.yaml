@@ -1,6 +1,9 @@
 yaml i18n test: yaml тест перевода
 yaml test with variable ${value}: yaml тест с переменной ${value}
 
+yaml isomorphic test with variable ${{ value }}: yaml изоморфный тест с переменной ${{ value }}
+
+
 yaml test || yaml tests:
   - yaml тест
   - yaml теста
@@ -26,4 +29,4 @@ new notification || new notifications:
   - новых уведомлений
 
 shorthand // You have ${value} new ${i18n(value, 'notification || notifications')} from mailbox:
-  У вас есть ${value} ${i18n_ru(value, 'новое уведомление || новых уведомления || новых уведомлений')} из почты
+  У вас есть ${value} ${i18n(value, 'новое уведомление || новых уведомления || новых уведомлений', 'ru')} из почты

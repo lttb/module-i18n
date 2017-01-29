@@ -1,12 +1,13 @@
 {
   "presets": [
-    "airbnb",
-    "stage-3"
+    "stage-0"
   ],
   "plugins": [
-    ["transform-runtime", {
-      "polyfill": false,
-      "regenerator": true
+    "transform-es2015-modules-commonjs",
+    "async-to-promises",
+    ["transform-object-rest-spread", { "useBuiltIns": true }],
+    ["babel-root-import", {
+      "rootPathSuffix": "src"
     }]
   ]
 }

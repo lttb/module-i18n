@@ -1,6 +1,6 @@
 # module i18n example
 
-Install the dependencies and start webpack-dev-server. The server will be started with default language (English)
+Install dependencies and start webpack-dev-server. The server will be started with default language (English)
 
 ```sh
 $ npm i

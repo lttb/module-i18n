@@ -1,12 +1,31 @@
 {
   "presets": [
-    "airbnb",
-    "stage-0"
+    "react",
+    "stage-3"
   ],
   "plugins": [
     "react-hot-loader/babel",
+    "transform-es2015-modules-commonjs",
+    "async-to-promises",
+    ["transform-object-rest-spread", { "useBuiltIns": true }],
     ["babel-root-import", {
       "rootPathSuffix": "src/client"
     }]
-  ]
+  ],
+  "env": {
+    "presets": [
+      "stage-3"
+    ],
+    "server": {
+      "plugins": [
+        [
+          "css-modules-transform", {
+            "preprocessCss": "tools/loaders/sass-loader.js",
+            "generateScopedName": "[name]-[local]___[hash:base64:5]",
+            "extensions": [".scss"]
+          }
+        ]
+      ]
+    }
+  }
 }

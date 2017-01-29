@@ -1,0 +1,17 @@
+.langList {
+  display: flex;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+
+  .lang {
+    margin-right: 10px;
+    padding: 5px;
+
+    &.current {
+      border-bottom: 1px solid red;
+    }
+  }
+}

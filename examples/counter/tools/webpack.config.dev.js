@@ -5,12 +5,17 @@ const webpack = require('webpack')
 
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const PORT = 3000;
+const PORT = 3000
 
 const PATHS = {
   app: path.resolve(__dirname, '../src/client'),
   build: path.resolve(__dirname, '../build'),
 }
+
+const lang = (JSON
+  .parse(process.env.npm_config_argv)
+  .original
+  .find(arg => arg.includes('-lang:')) || 'en').replace('-lang:', '')
 
 const plugins = [
   new webpack.HotModuleReplacementPlugin(),
@@ -56,8 +61,11 @@ const rules = [
         query: { cacheDirectory: true },
       },
       {
-        loader: 'module-i18n/lib/loader',
-        query: { lang: 'ru' },
+        loader: 'module-i18n/lib/loader/webpack',
+        query: {
+          lang,
+          supported: ['ru', 'en'],
+        },
       },
     ],
   },

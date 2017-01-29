@@ -1,5 +1,7 @@
-Clicked ${counter} ${i18n(counter, 'time || times')}:
-  Нажато ${counter} ${i18n_ru(counter, 'раз || раза || раз')}
+Counter clicked ${{ counter }} ${'counter, "time || times"'}:
+  Счетчик нажат ${{ counter }} ${'counter, "раз || раза || раз", "ru"'}
+Today is ${() => i18n.formatDate(new Date())}:
+  Сегодня ${() => i18n.formatDate(new Date())}
 
 Increment: 'Увеличить'
 Decrement: 'Уменьшить'

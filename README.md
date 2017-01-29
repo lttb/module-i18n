@@ -18,6 +18,8 @@ I think that it's useful to build a separate bundle for language. There are some
 - Efficient, no runtime function/components creation
 - You have an availability to upgrade only certain language bundle, and other language bundles will continue to be stored in cache 
 
+> Note, that this project has unstable experimental status, so I'll be glad for feedback.
+
 ## Usage
 
 ### Installation
@@ -66,6 +68,8 @@ i18m.customKey
 ```
 
 ### Example
+
+You can check a [counter example with server side rendering](https://github.com/lttb/module-i18n/tree/master/examples/counter) or [tests](https://github.com/lttb/module-i18n/tree/master/src/tests) for more details.
 
 Imagine we have this file structure:
 * src
@@ -138,7 +142,7 @@ module.exports = ['ru', 'en'].map(lang => ({
                 use: [
                     {
                         /* use module i18n loader for inline translations */
-                        loader: 'module-i18n/loader/webpack',
+                        loader: 'module-i18n/lib/loader/webpack',
                         query: {
                             lang,
                             namespace: 'i18n',

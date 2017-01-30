@@ -25,7 +25,8 @@
             "extensions": [".scss"]
           }
         ]
-      ]
+      ],
+      "ignore": ["tools/loaders/sass-loader.js"]
     }
   }
 }

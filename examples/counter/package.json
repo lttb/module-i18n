@@ -2,14 +2,15 @@
   "name": "module-i18n-counter-example",
   "version": "0.0.1",
   "description": "module i18n counter example",
-  "main": "lib/server/index.js",
+  "main": "lib/server/index.jsx",
   "scripts": {
     "start": "webpack-dev-server --config ./tools/webpack.config.dev.js",
-    "start:server": "npm run clean:client && npm run build:server && node .",
+    "start:server": "BABEL_ENV=server babel-node src/server",
     "clean:server": "rm -rf lib",
-    "clean:client": "rm -rf build",
+    "clean:client": "rm -rf dist",
     "build:client": "npm run clean:client && webpack --config ./tools/webpack.config.client.js",
-    "build:server": "npm run clean:server && BABEL_ENV=server babel src --copy-files --out-dir ./lib"
+    "build:server": "npm run clean:server && BABEL_ENV=server babel src --copy-files --out-dir ./lib",
+    "build": "npm run build:client && npm run build:server"
   },
   "author": "Kenzhaev Artur",
   "license": "MIT",

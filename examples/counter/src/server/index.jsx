@@ -15,7 +15,7 @@ import App from '../client/containers/App'
 const app = express()
 const port = 3000
 
-I18ns().then((i18n) => {
+I18ns().then((I18n) => {
   const renderFullPage = ({ html, state, lang }) =>
     `
       <!doctype html>
@@ -38,11 +38,19 @@ I18ns().then((i18n) => {
     const { counter } = query
     const { lang = 'en' } = params
 
+    const i18n = I18n[lang]
+
+    if (!i18n) {
+      res.status(400).send('Unsupported language')
+
+      return
+    }
+
     const store = createStore(rootReducer, { counter: Number(counter) || 0 })
 
     const html = renderToString(
       <Provider store={store}>
-        <I18nProvider i18n={i18n[lang]}>
+        <I18nProvider i18n={i18n}>
           <App />
         </I18nProvider>
       </Provider>,
@@ -52,8 +60,8 @@ I18ns().then((i18n) => {
   }
 
   app.use('/static', express.static('dist'))
-  app.use('/:lang?', handleRender)
+  app.use('/:lang?/?$', handleRender)
 
-  app.listen(port)
+  app.listen(port, () => console.log(`listening on port ${port}`))
 })
 

@@ -18,7 +18,7 @@ export default ({
   plurals,
 }) => {
   const customKeyRegexp = new RegExp(`.*${namespace}`)
-  const pluralRegexp = new RegExp(`(?:\\(\\.*?\\)\\s*=>\\s*)?${namespace}(?:\\.(\\w*))?(?:\\(([\\s\\S]*?)\\))?`, 'ig')
+  const pluralRegexp = new RegExp(`[\\w.]*(?:\\(\\.*?\\)\\s*=>\\s*)?${namespace}(?:\\.(\\w*))?(?:\\(([\\s\\S]*?)\\))?`, 'ig')
   const moduleNamespace = `${namespace}_methods`
 
   const replacer = async (match, prop, string) => {

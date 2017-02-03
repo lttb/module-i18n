@@ -33,6 +33,14 @@ describe('Loader i18n', () => {
     expect(result).toEqual('`yaml тест перевода`')
   })
 
+  it('test with default options with context', async () => {
+    const sourceMock = 'this.context.i18n`yaml i18n test`'
+
+    const result = await loader(sourceMock, options())
+
+    expect(result).toEqual('`yaml тест перевода`')
+  })
+
   it('test with variable with default options', async () => {
     const sourceMock = 'i18n`yaml test with variable ${value}`'
 
@@ -97,6 +105,21 @@ i18n тест
 
   it('test with russian plural', async () => {
     const sourceMock = `i18n(value, 'yaml test || yaml tests')`
+
+    const result = await loader(sourceMock, options())
+
+    const plurals = {
+      1: 'yaml тест',
+      2: 'yaml теста',
+      5: 'yaml тестов',
+    }
+
+    Object.entries(plurals).forEach(([value, text]) =>
+      expect(eval(result)).toEqual(text))
+  })
+
+  it('test with russian plural with context', async () => {
+    const sourceMock = `this.context.i18n(value, 'yaml test || yaml tests')`
 
     const result = await loader(sourceMock, options())
 

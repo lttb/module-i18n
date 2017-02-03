@@ -4,7 +4,7 @@ import prepareClause from '~/common/Clause'
 
 
 export default ({ namespace, dictionary }) => {
-  const clauseRegexp = new RegExp(`${namespace}\`([\\s\\S]*?(\\$\\{.*?\\})?)\``, 'g')
+  const clauseRegexp = new RegExp(`[\\w.]*${namespace}\`([\\s\\S]*?(\\$\\{.*?\\})?)\``, 'g')
 
   const replacer = async (_, key) =>
     `\`${prepareClause({

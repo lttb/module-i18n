@@ -70,7 +70,7 @@ const rules = [
     ],
   },
   {
-    test: /\.(s[a|c]ss|css)$/,
+    test: /\.(s[ac]ss|css)$/,
     use: [
       'style-loader',
       {

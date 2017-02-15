@@ -1,5 +1,3 @@
-import path from 'path'
-
 import initor from './initor'
 import getResource from './get-resource'
 
@@ -41,42 +39,28 @@ export default async ({ i18n = {}, dict = {}, files }) => {
   const supported = Object.keys(table).sort()
 
   return new Proxy(table, {
-    get: (t, lang) => {
-      if (lang === 'supported') {
-        return supported
-      }
+    get: (langs, lang) => {
+      if (lang === 'supported') return supported
+      if (!langs[lang]) return undefined
 
-      if (!t[lang] && lang !== defaultLang) {
-        return undefined
-      }
-
-      return new Proxy(Object.assign(() => {}, t[lang]), {
+      return new Proxy(Object.assign(() => {}, langs[lang]), {
         get: (target, prop) => {
-          if (prop === 'supported') {
-            return supported
-          }
+          if (prop === 'supported') return supported
+          if (prop === 'current') return lang
 
-          if (prop === 'current') {
-            return lang
-          }
+          const resource = getResource(namespace)
 
-          const resource = path.resolve(path.dirname(getResource()), namespace)
-
-          if (!(target[resource] && target[resource][prop])) {
-            return target
-          }
+          if (!(target[resource] && target[resource][prop])) return target
 
           return target[resource][prop]
         },
 
         apply: (target, thisArg, args) => {
-          const resource = path.resolve(path.dirname(getResource()), namespace)
+          const resource = getResource(namespace)
 
-          if (target[resource]) {
-            return target[resource](...args)
-          }
+          if (target[resource]) return target[resource](...args)
 
-          return t[defaultLang]['*'](...args)
+          return langs[defaultLang]['*'](...args)
         },
       })
     },

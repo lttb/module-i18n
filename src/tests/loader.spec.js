@@ -225,7 +225,7 @@ i18n тест
       expect(eval(result)).toEqual(text))
   })
 
-  it('test i18n method', async () => {
+  it('test i18n custom method and key', async () => {
     const sourceMock = 'i18n.testMethod();i18n.testKey'
 
     const result = await loader(sourceMock, options())

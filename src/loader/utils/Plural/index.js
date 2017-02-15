@@ -18,28 +18,23 @@ export default ({
   plurals,
 }) => {
   const customKeyRegexp = new RegExp(`.*${namespace}`)
-  const pluralRegexp = new RegExp(`[\\w.]*(?:\\(\\.*?\\)\\s*=>\\s*)?${namespace}(?:\\.(\\w*))?(?:\\(([\\s\\S]*?)\\))?`, 'ig')
   const moduleNamespace = `${namespace}_methods`
+  const pluralRegexp = new RegExp(`[\\w.]*(?:\\(\\.*?\\)\\s*=>\\s*)?${namespace}(?:\\.(\\w*))?(?:\\(([\\s\\S]*?)\\))?`, 'ig')
 
   const replacer = async (match, prop, string) => {
     if (!(prop || string)) return match
 
-    if (prop === 'supported') {
-      return JSON.stringify((supported || [lang]).sort())
-    }
+    if (prop === 'supported') return JSON.stringify((supported || [lang]).sort())
+    if (prop === 'current') return JSON.stringify(lang)
 
-    if (prop === 'current') {
-      return JSON.stringify(lang)
-    }
+    const { methods, keys } = await dictionary()
 
-    const dict = await dictionary()
-
-    if (dict.methods[prop]) {
+    if (methods[prop]) {
       return match.replace(customKeyRegexp, moduleNamespace)
     }
 
-    const [value, keys, currLang] = string.trim().split(pluralArgsRegex)
-    const key = keys.slice(1, -1)
+    const [value, pluralKey, currLang] = string.trim().split(pluralArgsRegex)
+    const key = pluralKey.slice(1, -1)
 
     try {
       const {
@@ -47,11 +42,11 @@ export default ({
         plural,
         pluralArr,
       } = preparePlural({
-        keys: dict.keys,
+        keys,
         key,
         lang,
-        defaultLang: currLang ? currLang.slice(1, -1) : defaultLang,
         plurals,
+        defaultLang: currLang ? currLang.slice(1, -1) : defaultLang,
       })
 
       return pluralInliner({

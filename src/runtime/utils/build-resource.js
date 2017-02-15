@@ -1,7 +1,7 @@
 import initor from './initor'
 
 
-export default ({ i18n, dict, files, resource }) => {
+export default ({ i18n, dict, files }, resource) => {
   const { type = 'yaml' } = i18n
 
   const isDict = new RegExp(`\\.${type}$`)

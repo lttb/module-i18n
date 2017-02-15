@@ -13,9 +13,6 @@
     }]
   ],
   "env": {
-    "presets": [
-      "stage-3"
-    ],
     "server": {
       "plugins": [
         [

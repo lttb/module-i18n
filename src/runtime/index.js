@@ -26,11 +26,10 @@ export const I18ns = ({ i18n, dict, options = {} } = {}) => {
 export default ({ i18n = {}, dict } = {}) => {
   const { namespace = 'i18n' } = i18n
 
-  const resource = getResource()
-  const dictDir = path.resolve(path.dirname(resource), namespace)
+  const resource = getResource(namespace)
 
   return new Promise(resolve => fs.readdir(
-    dictDir,
-    (err, files) => resolve(buildResource({ i18n, dict, files, resource })),
+    resource,
+    (err, files) => resolve(buildResource({ i18n, dict, files }, resource)),
   ))
 }

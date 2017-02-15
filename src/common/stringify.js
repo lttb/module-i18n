@@ -1,7 +1,8 @@
-export default (object) => {
-  const placeholder = '_PLACEHOLDER_'
-  const getHash = key => `_${placeholder}_${key}_`
+const placeholder = '_PLACEHOLDER_'
+const getHash = key => `_${placeholder}_${key}_`
 
+
+export default (object) => {
   const fn = {}
 
   const JSONreplacer = (key, value) => {

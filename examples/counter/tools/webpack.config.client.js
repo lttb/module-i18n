@@ -74,7 +74,7 @@ module.exports = ['en', 'ru'].map(lang => ({
         ],
       },
       {
-        test: /\.(s[a|c]ss|css)$/,
+        test: /\.(s[ac]ss|css)$/,
         loader: ExtractTextPlugin.extract({
           loader: [
             {

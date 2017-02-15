@@ -2,7 +2,7 @@
   "name": "module-i18n-counter-example",
   "version": "0.0.1",
   "description": "module i18n counter example",
-  "main": "lib/server/index.jsx",
+  "main": "lib/server/index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./tools/webpack.config.dev.js",
     "start:server": "BABEL_ENV=server babel-node src/server",

@@ -155,9 +155,3 @@ module.exports = ['ru', 'en'].map(lang => ({
     }
 }))
 ```
-#### eslint
-You can use this rules for your namespace, for example:
-```yaml
-globals:
-    # for module-i18n loader
-    i18n: true

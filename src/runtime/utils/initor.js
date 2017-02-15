@@ -21,9 +21,7 @@ export default async (options) => {
   const { Clause, Plural } = getTransducers(Object.assign({ keys }, i18n))
 
   return Object.assign((...args) => {
-    if (args[0].raw) {
-      return Clause(...args)
-    }
+    if (args[0].raw) return Clause(...args)
 
     return Plural(...args)
   }, methods)

@@ -1,99 +1,58 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
+const R = require('ramda')
 const path = require('path')
 const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const common = require('./webpack.common')
+
 
 const PATHS = {
   app: path.resolve(__dirname, '../src/client'),
   dist: path.resolve(__dirname, '../dist'),
 }
 
-const plugins = [
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify('development'),
-    __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
-  }),
-  new ExtractTextPlugin({
-    filename: '[name].css',
-    disable: false,
-    allChunks: true,
-  }),
-  new webpack.NoErrorsPlugin(),
-  new webpack.NamedModulesPlugin(),
-]
 
-module.exports = ['en', 'ru'].map(lang => ({
-  entry: {
-    [lang]: path.join(PATHS.app, 'index.jsx'),
-  },
-  output: {
-    path: PATHS.dist,
-    filename: '[name].js',
-  },
-  stats: {
-    colors: true,
-    reasons: true,
-  },
-  resolve: {
-    extensions: ['.js', '.jsx', '.scss', '.json'],
-  },
-  module: {
-    rules: [
-      {
-        enforce: 'pre',
-        test: /(\.js|\.jsx)$/,
-        include: [
-          PATHS.app,
-        ],
-        loaders: [
-          {
-            loader: 'eslint-loader',
-            query: { cache: true },
-          },
-        ],
-      },
-      {
-        test: /(\.js|\.jsx)$/,
-        include: [
-          PATHS.app,
-        ],
-        use: [
-          {
-            loader: 'babel-loader',
-            query: { cacheDirectory: true },
-          },
-          {
-            loader: 'module-i18n/lib/loader/webpack',
-            query: {
-              lang,
-              supported: ['ru', 'en'],
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(s[ac]ss|css)$/,
-        loader: ExtractTextPlugin.extract({
-          loader: [
-            {
-              loader: 'css-loader',
-              query: {
-                modules: true,
-                importLoaders: 1,
-                localIdentName: '[name]-[local]___[hash:base64:5]',
-              },
-            },
-            'sass-loader',
-          ],
-        }),
-      },
-    ],
-  },
-  plugins,
-  devtool: 'cheap-module-eval-source-map',
+const config = (lang) => {
+  const { conf, lens, tests } = common({ PATHS, lang })
 
-  performance: {
-    hints: false,
-  },
-}))
+  const plugins = R.over(R.lensProp('plugins'), R.concat([
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production'),
+    }),
+    new ExtractTextPlugin({
+      filename: '[name].css',
+      disable: false,
+      allChunks: true,
+    }),
+  ]))
+
+  const rules = R.set(
+    R.compose(
+      R.lensPath(['module', 'rules']),
+      lens.byCond(R.whereEq({ test: tests.style }))
+    ),
+    R.over(
+      R.lensProp('use'),
+      R.compose(
+        ExtractTextPlugin.extract,
+        R.merge({ fallback: 'style-loader' }),
+        R.objOf('use')
+      )
+    )
+  )
+
+  const rest = R.merge({
+    entry: {
+      [lang]: path.join(PATHS.app, 'index.jsx'),
+    },
+    output: {
+      path: PATHS.dist,
+      filename: '[name].js',
+    },
+  })
+
+  return R.compose(rest, plugins, rules)(conf)
+}
+
+
+module.exports = ['en', 'ru'].map(config)

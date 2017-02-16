@@ -1,9 +1,10 @@
-/* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-
+const R = require('ramda')
 const path = require('path')
 const webpack = require('webpack')
-
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const common = require('./webpack.common')
+
 
 const PORT = 3000
 
@@ -12,15 +13,15 @@ const PATHS = {
   build: path.resolve(__dirname, '../build'),
 }
 
-const lang = (process.env.npm_config_argv.match(/-lang:(\w+)/) || [])[1] || 'en'
+const [lang = 'en'] = (process.env.npm_config_argv.match(/-lang:(\w+)/) || []).reverse()
 
-const plugins = [
+const { conf, lens, tests } = common({ PATHS, lang })
+
+const plugins = R.over(R.lensProp('plugins'), R.concat([
   new webpack.HotModuleReplacementPlugin(),
   new webpack.DefinePlugin({
     'process.env.NODE_ENV': JSON.stringify('development'),
-    __DEV__: JSON.stringify(JSON.parse(process.env.DEBUG || 'false')),
   }),
-  new webpack.NoErrorsPlugin(),
   new HtmlWebpackPlugin({
     inject: true,
     minify: {
@@ -33,64 +34,33 @@ const plugins = [
     lang,
   }),
   new webpack.NamedModulesPlugin(),
-]
+]))
 
-const rules = [
-  {
-    enforce: 'pre',
-    test: /(\.js|\.jsx)$/,
-    include: [
-      PATHS.app,
-    ],
-    loaders: [
-      {
-        loader: 'eslint-loader',
-        query: { cache: true },
-      },
-    ],
-  },
-  {
-    test: /(\.js|\.jsx)$/,
-    include: [
-      PATHS.app,
-    ],
-    use: [
-      {
-        loader: 'babel-loader',
-        query: { cacheDirectory: true },
-      },
-      {
-        loader: 'module-i18n/lib/loader/webpack',
-        query: {
-          lang,
-          supported: ['ru', 'en'],
-        },
-      },
-    ],
-  },
-  {
-    test: /\.(s[ac]ss|css)$/,
-    use: [
-      'style-loader',
-      {
-        loader: 'css-loader',
-        query: {
-          sourceMap: true,
-          modules: true,
-          importLoaders: 1,
-          localIdentName: '[name]-[local]___[hash:base64:5]',
-        },
-      },
-      'sass-loader',
-    ],
-  },
-  {
+const rules = R.compose(
+  R.set(
+    R.compose(
+      R.lensPath(['module', 'rules']),
+      lens.byCond(R.whereEq({ test: tests.style }))
+    ),
+    R.compose(
+      R.set(
+        R.compose(R.lensProp('use'), lens.byCond(R.whereEq({ loader: 'postcss-loader' }))),
+        R.assocPath(['options', 'sourceMap'], true)
+      ),
+      R.over(
+        R.lensProp('use'),
+        R.prepend('style-loader')
+      )
+    )
+  ),
+
+  R.over(R.lensPath(['module', 'rules']), R.concat([{
     test: /\.pug$/,
     loader: 'pug-loader',
-  },
-]
+  }]))
+)
 
-module.exports = {
+const rest = R.merge({
   entry: [
     `webpack-dev-server/client?http://localhost:${PORT}`,
     'webpack/hot/only-dev-server',
@@ -106,20 +76,17 @@ module.exports = {
     colors: true,
     reasons: true,
   },
-  resolve: {
-    extensions: ['.js', '.jsx', '.scss', '.json'],
-  },
-  module: { rules },
-  plugins,
   devServer: {
     contentBase: PATHS.app,
     port: PORT,
     historyApiFallback: true,
     hot: true,
   },
-  devtool: 'eval',
 
   performance: {
     hints: false,
   },
-}
+})
+
+
+module.exports = R.compose(plugins, rules, rest)(conf)

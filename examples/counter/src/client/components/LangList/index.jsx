@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 
-import style from './style.scss'
+import './style.scss'
 
 
 const LangList = ({ langs, current }, { i18n }) => (
-  <div className={style.langSelect}>
+  <div>
     <span>{i18n`Select language (with server side render)`}:</span>
-    <ul className={style.langList}>
+    <ul styleName="langList">
       {langs.map((lang, index) => (
-        <li key={index} className={classnames(style.lang, lang === current && style.current)}>
+        <li key={index} styleName={classnames('lang', lang === current && 'current')}>
           <a href={lang}>{lang}</a>
         </li>
       ))}

@@ -9,6 +9,14 @@
     ["babel-root-import", {
       "rootPathSuffix": "src/client"
     }],
+    [
+      "react-css-modules", {
+        "filetypes": {
+          ".scss": "postcss-scss"
+        },
+        "generateScopedName": "[name]-[local]___[hash:base64:5]"
+      }
+    ]
   ],
   "env": {
     "development": {
@@ -21,13 +29,13 @@
         "transform-es2015-modules-commonjs",
         [
           "css-modules-transform", {
-            "preprocessCss": "tools/loaders/sass-loader.js",
+            "preprocessCss": "tools/loaders/scss-loader.js",
             "generateScopedName": "[name]-[local]___[hash:base64:5]",
             "extensions": [".scss"]
           },
         ]
       ],
-      "ignore": ["tools/loaders/sass-loader.js"]
+      "ignore": ["tools/loaders/scss-loader.js"]
     }
   }
 }

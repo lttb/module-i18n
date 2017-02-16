@@ -8,9 +8,15 @@ import configureStore from './store/configureStore'
 
 const store = configureStore()
 
-render(
+const renderApp = () => render(
   <Provider store={store}>
     <App />
   </Provider>,
   document.getElementById('app'),
 )
+
+renderApp()
+
+if (module.hot) {
+  module.hot.accept('./containers/App', renderApp)
+}

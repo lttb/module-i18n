@@ -4,17 +4,21 @@
     "stage-3"
   ],
   "plugins": [
-    "transform-es2015-modules-commonjs",
-    "react-hot-loader/babel",
     "async-to-promises",
     ["transform-object-rest-spread", { "useBuiltIns": true }],
     ["babel-root-import", {
       "rootPathSuffix": "src/client"
-    }]
+    }],
   ],
   "env": {
+    "development": {
+      "plugins": [
+        "react-hot-loader/babel"
+      ],
+    },
     "server": {
       "plugins": [
+        "transform-es2015-modules-commonjs",
         [
           "css-modules-transform", {
             "preprocessCss": "tools/loaders/sass-loader.js",

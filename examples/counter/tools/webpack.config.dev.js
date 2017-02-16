@@ -12,13 +12,7 @@ const PATHS = {
   build: path.resolve(__dirname, '../build'),
 }
 
-const lang = (langArg =>
-  (JSON
-    .parse(process.env.npm_config_argv)
-    .original
-    .find(arg => arg.includes(langArg)) || 'en'
-  ).replace(langArg, '')
-)('-lang:')
+const lang = (process.env.npm_config_argv.match(/-lang:(\w+)/) || [])[1] || 'en'
 
 const plugins = [
   new webpack.HotModuleReplacementPlugin(),
@@ -98,7 +92,6 @@ const rules = [
 
 module.exports = {
   entry: [
-    'react-hot-loader/patch',
     `webpack-dev-server/client?http://localhost:${PORT}`,
     'webpack/hot/only-dev-server',
 
@@ -124,7 +117,7 @@ module.exports = {
     historyApiFallback: true,
     hot: true,
   },
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'eval',
 
   performance: {
     hints: false,

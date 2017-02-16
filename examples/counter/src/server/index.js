@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-filename-extension */
+
+import pug from 'pug'
 import express from 'express'
 import React from 'react'
 import { createStore } from 'redux'
@@ -16,23 +19,7 @@ const app = express()
 const port = 3000
 
 I18ns().then((I18n) => {
-  const renderFullPage = ({ html, state, lang }) =>
-    `
-      <!doctype html>
-      <html>
-        <head>
-          <title>Counter i18n server render example | ${lang}</title>
-          <link rel="stylesheet" href="/static/${lang}.css">
-        </head>
-        <body>
-          <div id="app">${html}</div>
-          <script>
-            window.PRELOADED_STATE = ${JSON.stringify(state)}
-          </script>
-          <script src="/static/${lang}.js"></script>
-        </body>
-      </html>
-    `
+  const renderFullPage = pug.compileFile('src/client/templates/server.pug')
 
   const handleRender = ({ query, params }, res) => {
     const { counter } = query
@@ -56,7 +43,12 @@ I18ns().then((I18n) => {
       </Provider>,
     )
 
-    res.send(renderFullPage({ html, lang, state: store.getState() }))
+    res.send(renderFullPage({
+      html,
+      lang,
+      state: store.getState(),
+      env: 'server',
+    }))
   }
 
   app.use('/static', express.static('dist'))

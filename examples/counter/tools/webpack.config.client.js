@@ -6,7 +6,6 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const PATHS = {
   app: path.resolve(__dirname, '../src/client'),
-  server: path.resolve(__dirname, '../src/server'),
   dist: path.resolve(__dirname, '../dist'),
 }
 
@@ -26,7 +25,7 @@ const plugins = [
 
 module.exports = ['en', 'ru'].map(lang => ({
   entry: {
-    [lang]: path.resolve(PATHS.app, 'index.jsx'),
+    [lang]: path.join(PATHS.app, 'index.jsx'),
   },
   output: {
     path: PATHS.dist,

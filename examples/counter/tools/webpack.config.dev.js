@@ -12,10 +12,13 @@ const PATHS = {
   build: path.resolve(__dirname, '../build'),
 }
 
-const lang = (JSON
-  .parse(process.env.npm_config_argv)
-  .original
-  .find(arg => arg.includes('-lang:')) || 'en').replace('-lang:', '')
+const lang = (langArg =>
+  (JSON
+    .parse(process.env.npm_config_argv)
+    .original
+    .find(arg => arg.includes(langArg)) || 'en'
+  ).replace(langArg, '')
+)('-lang:')
 
 const plugins = [
   new webpack.HotModuleReplacementPlugin(),
@@ -30,8 +33,10 @@ const plugins = [
       preserveLineBreaks: true,
       collapseWhitespace: true,
     },
-    template: 'src/client/index.pug',
+    template: 'src/client/templates/client.pug',
     filename: 'index.html',
+
+    lang,
   }),
   new webpack.NamedModulesPlugin(),
 ]
@@ -97,7 +102,7 @@ module.exports = {
     `webpack-dev-server/client?http://localhost:${PORT}`,
     'webpack/hot/only-dev-server',
 
-    path.resolve(PATHS.app, 'index.jsx'),
+    path.join(PATHS.app, 'index.jsx'),
   ],
   output: {
     path: PATHS.build,

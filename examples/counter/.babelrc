@@ -4,8 +4,8 @@
     "stage-3"
   ],
   "plugins": [
-    "react-hot-loader/babel",
     "transform-es2015-modules-commonjs",
+    "react-hot-loader/babel",
     "async-to-promises",
     ["transform-object-rest-spread", { "useBuiltIns": true }],
     ["babel-root-import", {
@@ -20,7 +20,7 @@
             "preprocessCss": "tools/loaders/sass-loader.js",
             "generateScopedName": "[name]-[local]___[hash:base64:5]",
             "extensions": [".scss"]
-          }
+          },
         ]
       ],
       "ignore": ["tools/loaders/sass-loader.js"]

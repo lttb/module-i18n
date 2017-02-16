@@ -19,5 +19,5 @@ env:
   es6: true
   jest: true
 globals:
-    # for mi18n-loader
+    # for module i18n-loader
     i18n: true

@@ -8,7 +8,8 @@
     "lint": "eslint src",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "prebuild": "npm run clean && npm run lint && npm test",
+    "test:coverage": "npm test -- --coverage",
+    "prebuild": "npm run clean && npm run lint && npm run test:coverage",
     "build": "babel src --out-dir lib --ignore tests",
     "preversion": "npm run build",
     "postversion": "git push --follow-tags && npm publish"
@@ -53,7 +54,7 @@
     "babel-plugin-transform-runtime": "^6.15.0",
     "babel-preset-airbnb": "^2.1.1",
     "babel-preset-es2015-without-strict": "0.0.4",
-    "babel-preset-stage-3": "^6.17.0",
+    "babel-preset-stage-2": "^6.22.0",
     "eslint": "^3.13.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-plugin-import": "^2.2.0",

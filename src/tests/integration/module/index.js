@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 /* eslint-disable object-curly-spacing */
 
 module.exports = (i18n) => {

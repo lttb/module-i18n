@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import classnames from 'classnames'
 
-import './style.scss'
+import './style.sss'
 
 
 const LangList = ({ langs, current }, { i18n }) => (

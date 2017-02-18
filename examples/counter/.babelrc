@@ -12,7 +12,7 @@
     [
       "react-css-modules", {
         "filetypes": {
-          ".scss": "postcss-scss"
+          ".sss": "sugarss"
         },
         "generateScopedName": "[name]-[local]___[hash:base64:5]"
       }
@@ -29,13 +29,13 @@
         "transform-es2015-modules-commonjs",
         [
           "css-modules-transform", {
-            "preprocessCss": "tools/loaders/scss-loader.js",
+            "preprocessCss": "tools/loaders/sss-loader.js",
             "generateScopedName": "[name]-[local]___[hash:base64:5]",
-            "extensions": [".scss"]
+            "extensions": [".sss"]
           },
         ]
       ],
-      "ignore": ["tools/loaders/scss-loader.js"]
+      "ignore": ["tools/loaders/sss-loader.js"]
     }
   }
 }

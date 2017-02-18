@@ -72,15 +72,13 @@ const rest = R.merge({
     filename: 'js/bundle.js',
     publicPath: '/',
   },
-  stats: {
-    colors: true,
-    reasons: true,
-  },
   devServer: {
     contentBase: PATHS.app,
     port: PORT,
     historyApiFallback: true,
     hot: true,
+
+    stats: 'errors-only',
   },
 
   performance: {

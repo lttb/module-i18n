@@ -6,7 +6,7 @@ import { counterIncrement, counterDecrement } from '~/actions'
 import Counter from '~/components/Counter'
 import LangList from '~/components/LangList'
 
-import './style.scss'
+import './style.sss'
 
 
 const App = ({ counter, ...actions }, { i18n }) => (

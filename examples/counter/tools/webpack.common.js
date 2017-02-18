@@ -2,7 +2,40 @@ const R = require('ramda')
 const webpack = require('webpack')
 
 
+const tests = {
+  js: /\.jsx?$/,
+  style: /\.(s[ac]?ss|css)$/,
+}
+
 const rules = ({ PATHS, lang }) => [
+  {
+    enforce: 'pre',
+    test: tests.style,
+    use: [
+      {
+        loader: 'css-loader',
+        options: {
+          sourceMap: true,
+          modules: true,
+          importLoaders: 1,
+          localIdentName: '[name]-[local]___[hash:base64:5]',
+        },
+      },
+      {
+        loader: 'postcss-loader',
+        options: {
+          parser: 'sugarss',
+          plugins: () => [
+            require('stylelint')(),
+            require('postcss-reporter')({
+              clearAllMessages: true,
+            }),
+            require('precss')(),
+          ],
+        },
+      },
+    ],
+  },
   {
     enforce: 'pre',
     test: tests.js,
@@ -32,39 +65,11 @@ const rules = ({ PATHS, lang }) => [
       },
     ],
   },
-  {
-    test: tests.style,
-    use: [
-      {
-        loader: 'css-loader',
-        options: {
-          sourceMap: true,
-          modules: true,
-          importLoaders: 1,
-          localIdentName: '[name]-[local]___[hash:base64:5]',
-        },
-      },
-      {
-        loader: 'postcss-loader',
-        options: {
-          parser: 'postcss-scss',
-          plugins: [
-            require('precss')(),
-          ],
-        },
-      },
-    ],
-  },
 ]
 
 const plugins = () => [
   new webpack.NoEmitOnErrorsPlugin(),
 ]
-
-const tests = {
-  js: /(\.js|\.jsx)$/,
-  style: /\.(s[ac]?ss|css)$/,
-}
 
 const lens = {
   byCond: cond => R.lens(
@@ -80,7 +85,7 @@ module.exports = options => ({
 
   conf: {
     resolve: {
-      extensions: ['.js', '.jsx', '.scss', '.json'],
+      extensions: ['.js', '.jsx', '.sss', '.json'],
     },
 
     devtool: 'eval',

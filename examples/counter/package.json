@@ -27,7 +27,7 @@
     "redux-actions": "^1.2.0"
   },
   "devDependencies": {
-    "@lttb/configs.style": "git+https://github.com/lttb/configs.git#style",
+    "@lttb/configs.style": "lttb/configs#style",
     "babel-cli": "^6.22.2",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",

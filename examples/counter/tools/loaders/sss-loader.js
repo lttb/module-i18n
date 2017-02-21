@@ -1,5 +1,6 @@
-const postcss = require('postcss-js')
-const syntax = require('sugarss')
+const postcssJs = require('postcss-js')
+const postcss = require('postcss')
+const parser = require('sugarss')
 
-module.exports = (data, file) =>
-  postcss.process(file, { syntax })
+module.exports = data =>
+  postcss().process(data, { parser }).then(res => postcssJs.objectify(res.root))

@@ -46,7 +46,7 @@
     "string-replace-async": "^1.2.0"
   },
   "devDependencies": {
-    "@lttb/eslint-config-default": "https://github.com/lttb/configs#js",
+    "@lttb/eslint-config-default": "lttb/configs#js",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",
     "babel-plugin-async-to-promises": "^1.0.5",
@@ -55,7 +55,8 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-root-import": "^4.1.5",
     "eslint": "^3.13.0",
-    "jest": "^18.1.0"
+    "jest": "^18.1.0",
+    "postcss": "^5.2.14"
   },
   "jest": {
     "rootDir": "src"

@@ -1,10 +1,8 @@
-/* eslint-disable no-eval */
-
 import preparePlural from '~/common/Plural'
 import prepareClause from '~/common/Clause'
 
+import pluralHelper from './plural-helper'
 
-const pluralHelper = (n, plural) => Number(eval(plural))
 
 export default ({ lang, defaultLang, keys, plurals }) => {
   const Plural = (value, key, currLang) => {

@@ -1,5 +1,10 @@
 # Module i18n
 
+[![Travis branch](https://img.shields.io/travis/lttb/module-i18n/master.svg?style=flat)](https://travis-ci.org/lttb/module-i18n)
+[![Coverage Status branch](https://img.shields.io/coveralls/lttb/module-i18n/master.svg?style=flat)](https://img.shields.io/coveralls/lttb/module-i18n/master.svg?branch=master)
+[![npm version](https://img.shields.io/npm/v/module-i18n.svg?style=flat)](https://www.npmjs.com/package/module-i18n)
+[![npm license](https://img.shields.io/npm/l/prejss.svg?style=flat)](https://www.npmjs.com/package/prejss)
+
 ## Features
 * use **local** dictionaries for each module
 * pluralisation
